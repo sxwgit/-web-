@@ -19,8 +19,8 @@ var FIbonacci = {
 }
 Fibonacci = Object.create(FIbonacci)
 var main = function () {
-    num = 100;
-    for (var i = 1; i <= 200; i++) {
+    num = 200;
+    for (var i = 1; i <= num; i++) {
         console.log("斐波那契额数列第" + i + "是：" + Fibonacci.of(i))
     }
 }
