@@ -1,6 +1,18 @@
 from collections import Counter
 import pytest
 
+win_map = {
+        "散牌":1,
+        "对子":2,
+        "两对":3,
+        "三条":4,
+        "顺子":5,
+        "同花":6,
+        "葫芦":7,
+        "铁支":8,
+        "同花顺":9,
+    }
+
 def card_type(cards):
     # 接受牌，判断牌的类型
     colors = [card[1] for card in cards]
@@ -74,18 +86,6 @@ def card_type(cards):
         differ_numbers_index = numbers_index[:]      
         differ_numbers_index.sort(reverse=True)
         return ("散牌",differ_numbers_index)
-
-win_map = {
-        "散牌":1,
-        "对子":2,
-        "两对":3,
-        "三条":4,
-        "顺子":5,
-        "同花":6,
-        "葫芦":7,
-        "铁支":8,
-        "同花顺":9,
-    }
 
 def card_game(black_cards,white_cards):
     black_cards = black_cards.split()
