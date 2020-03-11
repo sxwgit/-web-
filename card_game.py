@@ -94,6 +94,10 @@ def card_game(black_cards,white_cards):
     # 同花顺＞铁支＞葫芦＞同花＞顺子＞三条＞两对＞对子＞散牌
     black_type,black_num = card_type(black_cards)
     white_type,white_num = card_type(white_cards)
+    print("----{}----".format("黑牌"))
+    print("黑牌类型是{}，对应输出是{}".format(black_type,black_num))
+    print("----{}----".format("白牌"))
+    print("白牌类型是{}，对应输出是{}".format(white_type,white_num))
     if win_map[black_type] > win_map[white_type]:
         return "Black wins"
     elif win_map[black_type] < win_map[white_type]:
@@ -171,16 +175,32 @@ def card_game(black_cards,white_cards):
                     return "White wins"
             return "Tie"
 
-def test_card_game():
+def test_win():
     assert card_game("2H 3D 5S 9C KD","2C 3H 4S 8C AH") == "White wins"
     assert card_game("2H 4S 4C 2D 4H","2S 8S AS QS 3S") == "Black wins"
     assert card_game("2H 3D 5S 9C KD","2C 3H 4S 8C KH") == "Black wins"
     assert card_game("2H 3D 5S 9C KD","2D 3H 5C 9S KH") == "Tie"
-    assert card_game("4H 5H 6H 7H 8H","7H 7D 7S 9C 8D") == "Black wins"
+    assert card_game("4H 5H 6H 7H 8H","7H 7D 7S 9C 8D") == "Black wins" # 同花顺和对子
     assert card_game("7H 7D AS 9S JD","8H 8D AS 9S JD") == "White wins"
     assert card_game("8D 9D 3H TH 2S","8D 9D 3H TH 3S") == "White wins"
 
+ 
+def test_type():
+    cards = "2H 3D 5S 9C KD"
+    cards = cards.split()
+    assert card_type(cards)[0] == "散牌"
+    cards = "2H 4S 4C 2D 4H"
+    cards = cards.split()
+    assert card_type(cards)[0] == "葫芦"
+    cards = "2H 4S 3C 5D 6H"
+    cards = cards.split()
+    assert card_type(cards)[0] == "顺子"
+    
 
 
 if __name__ == "__main__":
-    pytest.main(args=[__file__,"-v"])
+    # 两个测试，一个用来测试type是否正确，两一个判断胜负关系是否正确
+    # args=["-v",__file__+"::test_type"] # 选择某一个案例测试
+    args = ["-v",__file__]
+    print(args)
+    pytest.main(args)
