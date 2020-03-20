@@ -17,25 +17,47 @@ async function getAllTodo(req, res) {
 }
 
 
+
 async function createTodo(req, res) {
+    // req.body 是object，先转换成string类型
     var newtodo = JSON.stringify(req.body)
-    console.log(newtodo, 'nihao')
-    fs.readFile(file_path, function (err, data) {
-        if (err) {
-            console.log("读取文件出错")
-            console.log(err)
-        }
-        var data = JSON.parse(data)
-        data.push(newtodo)
-        var stringdata = JSON.stringify(data)
-        fs.writeFile(file_path, stringdata, function (err) {
-            if (error) {
+    // 在将string类型的body，转换成json类型
+    var newtodo = JSON.parse(newtodo)
+    var flag = 0
+    if (newtodo == undefined){
+        console.log("body未定义错误")
+        res.status(400).send()
+    }
+    else{
+        fs.readFile(file_path, function (err, data) {
+            if (err) {
+                console.log("读取文件出错")
                 console.log(err)
             }
-            console.log("新增成功：", stringdata)
+            var data = JSON.parse(data)
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].id === newtodo.id) {
+                    flag = 1
+                }
+            }
+            if (flag === 0){
+                data.push(newtodo)
+                var stringdata = JSON.stringify(data)
+                fs.writeFile(file_path, stringdata, function (err) {
+                    if (err) {
+                        console.log(err)
+                    }
+                    console.log("新增成功")
+                })
+                res.status(201).send(data)
+            }
+            else{
+                console.log("相同id，无法创建")
+                res.status(400).send("can't create same id")
+            }
+            
         })
-        res.send(data)
-    })
+    }
 }
 
 async function getTodo(req, res) {
@@ -56,7 +78,7 @@ async function getTodo(req, res) {
             res.status(400).send()
         }
         else {
-            res.status(201).send(result)
+            res.status(200).send(result)
         }
 
     })
@@ -64,7 +86,6 @@ async function getTodo(req, res) {
 
 async function deleteTodo(req, res) {
     var todoId = req.params.id
-    console.log(todoId)
     var flag = 0
     fs.readFile(file_path, function (err, data) {
         if (err) {
@@ -74,24 +95,23 @@ async function deleteTodo(req, res) {
         for (var i = 0; i < data.length; i++) {
             if (data[i].id.toString() === todoId) {
                 // delete data[i]
-                console.log(data[i])
+                data.splice(i,1)
+                // console.log(data[i])
                 flag = 1
             }
         }
-        console.log(data, 'data')
         var stringdata = JSON.stringify(data)
-        console.log(stringdata, 'stringdata')
         fs.writeFile(file_path, stringdata, function (err) {
             if (err) {
                 console.log(err)
             }
-            console.log("删除成功：", stringdata)
+            console.log("删除成功")
         })
         if (flag === 0) {
-            res.sendStatus(400).send()
+            res.status(400).send()
         }
         else {
-            res.sendStatus(201).send(stringdata)
+            res.status(200).send(data)
         }
 
     })

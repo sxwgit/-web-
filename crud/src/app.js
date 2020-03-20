@@ -4,29 +4,32 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+var bodyParser =  require('body-parser')
 
 
 const {
     getAllTodo,
     createTodo,
     getTodo,
-    deleteTodo
+    deleteTodo,
 }=require("./function")
 
-
+app.use(bodyParser.json())
 
 app.get('/', (req, res) => res.send('Hello World'))
 
 // 返回所有Todo任务
-app.get("/api/tasks/",getAllTodo)
+app.get("/api/tasks",getAllTodo)
 // 创建一个新的Todo任务
-app.post("/api/tasks/",createTodo)
+app.post("/api/tasks",createTodo)
 // 返回一个指定ID的Todo任务
 app.get("/api/tasks/:id",getTodo)
 // 删除一个Todo任务
 app.delete("/api/tasks/:id",deleteTodo)
 
-app.listen(port,function(req,res){
-    console.log("Example app listening on port: "+port)
-})
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+exports.app = app
+
 
