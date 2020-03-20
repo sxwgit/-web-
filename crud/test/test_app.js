@@ -3,6 +3,17 @@ const {
 } = require('../src/app');
 const request = require('supertest');
 
+/*
+共包含六个测试用例
+1. 测试index页面
+2. 返回所有todo list
+3. 根据用户id返回对应todo
+4. 创建一个用户，测试create功能
+5. 创建与4相同的用户，测试相同id下，是否会报错
+6. 删除4创建的用户
+*/
+
+
 
 describe("test index page",function(){
     it("should return index page==>'Hello World'",function(done){
