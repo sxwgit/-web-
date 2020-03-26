@@ -13,7 +13,7 @@ export default class Addtodo extends Component {
     }
 
     OnBtnClick = (event) => {
-        if(this.state.inputContent != ""){
+        if(this.state.inputContent !== ""){
             this.props.AddNewItem(this.state.inputContent)
             this.setState({
                 inputContent : ""

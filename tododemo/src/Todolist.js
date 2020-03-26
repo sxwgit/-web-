@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import TodolistItem from "./TodolistItem"
 import Addtodo from "./Addtodo"
+import { number } from 'prop-types';
 // import todolist from './data/todo.json'
 
 const formatDate = function (date) {
@@ -42,7 +43,7 @@ export default class Todolist extends Component {
     AddNewItem = (NewItemContent) => {
         // 同时更新item和undoitem
         var new_item = {
-            key: formatDate(new Date()), // 用时间做key,
+            id: formatDate(new Date()), // 用时间做key,
             content: NewItemContent,
             done: false
         }
@@ -73,24 +74,22 @@ export default class Todolist extends Component {
 
 
     EditDoneState = (id) => {
-        const content_id = id
-
-        var list_length = this.state.selftodolist.length
-        var i = 0
-
-        for (; i < list_length; i++) {
-            
-            if (this.state.selftodolist[i].id.toString() === content_id) {
-
+        var content_id
+        for (var i = 0; i < this.state.selftodolist.length; i++) {
+            if((typeof this.state.selftodolist[i].id) === "number"){
+                content_id = this.state.selftodolist[i].id.toString()
+            }
+            else{
+                content_id = this.state.selftodolist[i].id
+            }
+            if (content_id === id) {
                 this.state.selftodolist[i].done = true
-
                 this.RefreshTodoState()
             }
 
         }
 
     }
-
 
     ShowUndoPage = ()=>{
         const handleClick = e => this.EditDoneState((e.target.id));
