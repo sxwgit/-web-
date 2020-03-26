@@ -76,10 +76,10 @@ export default class Todolist extends Component {
     EditDoneState = (id) => {
         var content_id
         for (var i = 0; i < this.state.selftodolist.length; i++) {
-            if((typeof this.state.selftodolist[i].id) === "number"){
+            if ((typeof this.state.selftodolist[i].id) === "number") {
                 content_id = this.state.selftodolist[i].id.toString()
             }
-            else{
+            else {
                 content_id = this.state.selftodolist[i].id
             }
             if (content_id === id) {
@@ -91,14 +91,14 @@ export default class Todolist extends Component {
 
     }
 
-    ShowUndoPage = ()=>{
+    ShowUndoPage = () => {
         const handleClick = e => this.EditDoneState((e.target.id));
-        if(this.state.selfundonelist.length === 0){
-            return <h2>恭喜你，所有代办事项已经完成</h2>
+        if (this.state.selfundonelist.length === 0) {
+            return <h3>恭喜你，所有代办事项已经完成</h3>
         }
-        else{
+        else {
             return <div>
-                <p>未完成项目</p>
+                <h3>未完成项目</h3>
                 < table align="center">
                     {
                         this.state.selfundonelist.map(function (item) {
@@ -115,27 +115,32 @@ export default class Todolist extends Component {
         }
     }
 
-    ShowDonePage = ()=>{
-        if(this.state.selfdonelist.length === 0){
-            return <h2>没有完成代办事项</h2>
+    ShowDonePage = () => {
+        if (this.state.selfdonelist.length === 0) {
+            return <h3>没有完成代办事项</h3>
         }
-        else{
-            return <div>
-                <p>以完成项目</p>
-                < table align="center">
-                    {
-                        this.state.selfdonelist.map(function (item) {
-                            return <div>
-                                <tr>
-                                    <td><TodolistItem item={item} /></td>
-                                    
-                                </tr>
-                            </div>
-                        }
-                        )}
-                </table>
-            </div>
+        if (this.state.selfdonelist.length === this.state.selftodolist.length) {
+            var text = <h3>下方项目均完成</h3>
         }
+        else {
+            var text = <h3>以完成项目</h3>
+        }
+
+        return <div>
+            {text}
+            < table align="center">
+                {
+                    this.state.selfdonelist.map(function (item) {
+                        return <div>
+                            <tr>
+                                <td><TodolistItem item={item} /></td>
+
+                            </tr>
+                        </div>
+                    }
+                    )}
+            </table>
+        </div>
     }
 
     render() {
@@ -144,8 +149,8 @@ export default class Todolist extends Component {
         return (
             <div>
                 <Addtodo AddNewItem={this.AddNewItem} />
-                <this.ShowUndoPage/>
-                <this.ShowDonePage/>
+                <this.ShowUndoPage />
+                <this.ShowDonePage />
                 {/* <p>未完成项目</p>
                 < table align="center">
                     {
