@@ -1,0 +1,12 @@
+.done-item {
+    color: gray;
+    /* padding: 0px;
+    margin: 0px; */
+    white-space: nowrap;
+}
+.undone-item {
+    color: black;
+    /* padding: 0px;
+    margin: 0px; */
+    white-space: nowrap;
+}
