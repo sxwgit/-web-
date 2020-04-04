@@ -88,7 +88,22 @@ export default class Todolist extends Component {
             }
 
         }
+    }
+    DeleteDoneItem = (id) =>{
+        var content_id
+        for (var i = 0; i < this.state.selftodolist.length; i++) {
+            if ((typeof this.state.selftodolist[i].id) === "number") {
+                content_id = this.state.selftodolist[i].id.toString()
+            }
+            else {
+                content_id = this.state.selftodolist[i].id
+            }
+            if (content_id === id) {
+                this.state.selftodolist.splice(i,1)
+                this.RefreshTodoState()
+            }
 
+        }
     }
 
     ShowUndoPage = () => {
@@ -99,7 +114,7 @@ export default class Todolist extends Component {
         else {
             return <div>
                 <h3>未完成项目</h3>
-                < table align="center">
+                < table align="center" id="undo-items">
                     {
                         this.state.selfundonelist.map(function (item) {
                             return <div>
@@ -116,6 +131,7 @@ export default class Todolist extends Component {
     }
 
     ShowDonePage = () => {
+        const handleClick = e => this.DeleteDoneItem((e.target.id));
         if (this.state.selfdonelist.length === 0) {
             return <h3>没有完成代办事项</h3>
         }
@@ -128,13 +144,13 @@ export default class Todolist extends Component {
 
         return <div>
             {text}
-            < table align="center">
+            < table align="center" id="done-items">
                 {
                     this.state.selfdonelist.map(function (item) {
                         return <div>
                             <tr>
                                 <td><TodolistItem item={item} /></td>
-
+                                <td><button id={item.id} onClick={handleClick}> 删除完成项目</button></td>
                             </tr>
                         </div>
                     }
@@ -151,32 +167,6 @@ export default class Todolist extends Component {
                 <Addtodo AddNewItem={this.AddNewItem} />
                 <this.ShowUndoPage />
                 <this.ShowDonePage />
-                {/* <p>未完成项目</p>
-                < table align="center">
-                    {
-                        this.state.selfundonelist.map(function (item) {
-                            return <div>
-                                <tr>
-                                    <td><TodolistItem item={item} /></td>
-                                    <td><button id={item.id} onClick={handleClick}> 已完成</button></td>
-                                </tr>
-                            </div>
-                        }
-                        )}
-                </table>
-
-                <p>以完成项目</p>
-                < table align="center">
-                    {
-                        this.state.selfdonelist.map(function (item) {
-                            return <div>
-                                <tr>
-                                    <td><TodolistItem item={item} /></td>
-                                </tr>
-                            </div>
-                        }
-                        )}
-                </table> */}
             </div>
         );
 
