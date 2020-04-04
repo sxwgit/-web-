@@ -109,11 +109,11 @@ export default class Todolist extends Component {
     ShowUndoPage = () => {
         const handleClick = e => this.EditDoneState((e.target.id));
         if (this.state.selfundonelist.length === 0) {
-            return <h3>恭喜你，所有代办事项已经完成</h3>
+            return <h3 id="undoItemStatus">恭喜你，所有代办事项已经完成</h3>
         }
         else {
             return <div>
-                <h3>未完成项目</h3>
+                <h3 id="undoItemStatus">未完成项目</h3>
                 < table align="center" id="undo-items">
                     {
                         this.state.selfundonelist.map(function (item) {
@@ -133,13 +133,13 @@ export default class Todolist extends Component {
     ShowDonePage = () => {
         const handleClick = e => this.DeleteDoneItem((e.target.id));
         if (this.state.selfdonelist.length === 0) {
-            return <h3>没有完成代办事项</h3>
+            return <h3 id="doneItemStatus">没有完成代办事项</h3>
         }
         if (this.state.selfdonelist.length === this.state.selftodolist.length) {
-            var text = <h3>下方项目均完成</h3>
+            var text = <h3 id="doneItemStatus">下方项目均完成</h3>
         }
         else {
-            var text = <h3>以完成项目</h3>
+            var text = <h3 id="doneItemStatus">以完成项目</h3>
         }
 
         return <div>
